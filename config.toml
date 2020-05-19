@@ -1,5 +1,5 @@
 # Site settings
-baseurl = "https://gnixxyz.github.io"
+baseurl = "https://gnixxyz.github.io/"
 languageCode = "en"
 title = "gnixxyz"
 theme = "hugo-theme-cactus-plus"
