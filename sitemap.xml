@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://gnixxyz.github.io/</loc>
+    <lastmod>2020-05-19T23:32:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/posts/</loc>
+    <lastmod>2020-05-19T23:32:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/posts/2020-05-19-welcome/</loc>
+    <lastmod>2020-05-19T23:32:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/tags/</loc>
+  </url>
+  
+</urlset>
