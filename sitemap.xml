@@ -3,26 +3,53 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://gnixxyz.github.io/categories/</loc>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/categories/cloud/</loc>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://gnixxyz.github.io/</loc>
-    <lastmod>2020-05-19T23:32:59+09:00</lastmod>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/tags/go/</loc>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/tags/nats/</loc>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/posts/2020-05-20-nats/</loc>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://gnixxyz.github.io/posts/</loc>
-    <lastmod>2020-05-19T23:32:59+09:00</lastmod>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/tags/</loc>
+    <lastmod>2020-05-20T16:54:39+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://gnixxyz.github.io/about/</loc>
+    <lastmod>2020-05-19T23:58:43+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://gnixxyz.github.io/posts/2020-05-19-welcome/</loc>
     <lastmod>2020-05-19T23:32:59+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://gnixxyz.github.io/categories/</loc>
-  </url>
-  
-  <url>
-    <loc>https://gnixxyz.github.io/tags/</loc>
   </url>
   
 </urlset>

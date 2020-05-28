@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="author" content="gnixxyz">
+		<meta name="description" content="gnixxyz&#39;s backlog">
+		<meta name="generator" content="Hugo 0.70.0" />
+		<title>NATS Messaging &middot; gnixxyz</title>
+		<link rel="shortcut icon" href="https://gnixxyz.github.io/images/favicon.ico">
+		<link rel="stylesheet" href="https://gnixxyz.github.io/css/style.css">
+		<link rel="stylesheet" href="https://gnixxyz.github.io/css/highlight.css">
+
+		
+		<link rel="stylesheet" href="https://gnixxyz.github.io/css/font-awesome.min.css">
+		
+
+		
+		<link href="https://gnixxyz.github.io/index.xml" rel="alternate" type="application/rss+xml" title="gnixxyz" />
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='https://gnixxyz.github.io/'> <span class="arrow">←</span>Home</a>
+	
+	<a href='https://gnixxyz.github.io/posts'>Archive</a>
+	<a href='https://gnixxyz.github.io/tags'>Tags</a>
+	<a href='https://gnixxyz.github.io/about'>About</a>
+
+	
+
+	
+	<a class="cta" href="https://gnixxyz.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+
+        <section id="wrapper" class="post">
+            <article>
+                <header>
+                    <h1>
+                        NATS Messaging
+                    </h1>
+                    <h2 class="headline">
+                    May 20, 2020 16:54
+                    · 2097 words
+                    · 5 minute read
+                      <span class="tags">
+                      
+                      
+                          
+                              <a href="https://gnixxyz.github.io/tags/go">go</a>
+                          
+                              <a href="https://gnixxyz.github.io/tags/nats">NATS</a>
+                          
+                      
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                  
+                    <div id="toc">
+                      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#natsとは">NATSとは</a>
+      <ul>
+        <li><a href="#nats">NATS</a>
+          <ul>
+            <li><a href="#natsの特徴">NATSの特徴</a></li>
+            <li><a href="#メッセージングモデル">メッセージングモデル</a></li>
+          </ul>
+        </li>
+        <li><a href="#nats-streaming">NATS Streaming</a></li>
+      </ul>
+    </li>
+    <li><a href="#nats-concepts">NATS Concepts</a>
+      <ul>
+        <li><a href="#subject">Subject</a></li>
+      </ul>
+    </li>
+    <li><a href="#natsを動かしてみる">NATSを動かしてみる</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#natsサーバーのインストールと起動">NATSサーバーのインストールと起動</a></li>
+            <li><a href="#メッセージング">メッセージング</a>
+              <ul>
+                <li><a href="#pubsub">Pub/Sub</a></li>
+                <li><a href="#request-reply">Request Reply</a></li>
+                <li><a href="#queue-groups">Queue Groups</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#周辺機能">周辺機能</a></li>
+      </ul>
+    </li>
+    <li><a href="#nats-streamingも動かしてみる">NATS Streamingも動かしてみる</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#streaming-pubsub">Streaming Pub/Sub</a></li>
+            <li><a href="#message-store">Message Store</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#最後に">最後に</a></li>
+  </ul>
+</nav>
+                    </div>
+                  
+                
+                <section id="post-body">
+                    <h1 id="natsとは">NATSとは</h1>
+<p>NATSは軽量でハイパフォーマンスなメッセージングを提供するミドルウェアです。
+比較されるミドルウェアとして、ActiveMQ、Kafka、Kestreal、NSQ、RabbitMQ、Redisなどがあります。</p>
+<p>NATSには大きく２つの仕組みがあります。
+いわゆるNATSと呼ばれるものとNATS Streamingと呼ばれるものの２つです。</p>
+<blockquote>
+<p>NATSサーバーは pub / subメカニズムに基づく高性能なnativeのメッセージシステムであり、メッセージ永続性がありません。
+NATS Streamingは NATSを利用したdata streamingシステムで、golangで作成されたメッセージ永続性機能が追加されました。</p>
+</blockquote>
+<h2 id="nats">NATS</h2>
+<h3 id="natsの特徴">NATSの特徴</h3>
+<h3 id="メッセージングモデル">メッセージングモデル</h3>
+<ul>
+<li><a href="https://docs.nats.io/nats-concepts/pubsub">Pub/Sub</a></li>
+<li><a href="https://docs.nats.io/nats-concepts/reqreply">Request Reply</a></li>
+<li><a href="https://docs.nats.io/nats-concepts/queue">Queue Groups</a></li>
+</ul>
+<p>NATSを実現するのが<a href="https://nats.io/download/nats-io/nats-server/">nats-server</a>というのがある</p>
+<h2 id="nats-streaming">NATS Streaming</h2>
+<h1 id="nats-concepts">NATS Concepts</h1>
+<h2 id="subject">Subject</h2>
+<p>メッセージの配信先を決めるID的なもの。大文字小文字の区別があり、.でトークンを区切る。
+game.event.1, GAME.EVENT.one, GAME.EVENT.* など。</p>
+<p>サブジェクトにはワイルドカードが使用できる。</p>
+<ul>
+<li>: なんでもマッチする。 game.event.* GAME.*</li>
+</ul>
+<blockquote>
+<p>: game.&gt;の場合はgame.event game.event.levelupにマッチするがgameのみにはマッチしない。</p>
+</blockquote>
+<ul>
+<li>
+<blockquote>
+<p>ともにトークン内の一部に使用することはできない。 ga*e.eventは使えない。</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="natsを動かしてみる">NATSを動かしてみる</h1>
+<h3 id="natsサーバーのインストールと起動">NATSサーバーのインストールと起動</h3>
+<p>インストール</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ go get github.com/nats-io/nats-server/v2
+</code></pre></div><p>nats-server起動</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ nats-server -DV
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.947492 <span style="color:#f92672">[</span>INF<span style="color:#f92672">]</span> Starting nats-server version 2.1.7
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.947612 <span style="color:#f92672">[</span>DBG<span style="color:#f92672">]</span> Go build version go1.14.2
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.947617 <span style="color:#f92672">[</span>INF<span style="color:#f92672">]</span> Git commit <span style="color:#f92672">[</span>not set<span style="color:#f92672">]</span>
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.947939 <span style="color:#f92672">[</span>INF<span style="color:#f92672">]</span> Listening <span style="color:#66d9ef">for</span> client connections on 0.0.0.0:4222
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.947952 <span style="color:#f92672">[</span>INF<span style="color:#f92672">]</span> Server id is NDUEQNPWKZCPLXHJ6GT7ILJX36VREQO3Y66IXEY5K7MVLIX6QECNND2H
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.947956 <span style="color:#f92672">[</span>INF<span style="color:#f92672">]</span> Server is ready
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.947967 <span style="color:#f92672">[</span>DBG<span style="color:#f92672">]</span> Get non local IPs <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#34;0.0.0.0&#34;</span>
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.948293 <span style="color:#f92672">[</span>DBG<span style="color:#f92672">]</span>  ip<span style="color:#f92672">=</span>192.168.3.4
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.948312 <span style="color:#f92672">[</span>DBG<span style="color:#f92672">]</span>  ip<span style="color:#f92672">=</span>2400:2410:b0a3:e900:1cc8:9e99:2ab4:4e70
+<span style="color:#f92672">[</span>23221<span style="color:#f92672">]</span> 2020/05/20 22:42:46.948321 <span style="color:#f92672">[</span>DBG<span style="color:#f92672">]</span>  ip<span style="color:#f92672">=</span>2400:2410:b0a3:e900:9465:3b0b:992d:84dc
+</code></pre></div><p>nats-server起動完了</p>
+<h3 id="メッセージング">メッセージング</h3>
+<p>メッセージングモデル毎に動作を見てみる</p>
+<h4 id="pubsub">Pub/Sub</h4>
+<p>汎用的なPub/Sub clientとして、Go clientのexamplesから、以下のファイルを準備してビルドしておく。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ git clone https://github.com/nats-io/nats.go.git $GOPATH/src/github.com/nats-io
+</code></pre></div><ul>
+<li>nats-pub</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cd $GOPATH/src/github.com/nats-io/examples/nats-pub
+$ go build -o ~/nats-pub main.go
+</code></pre></div><ul>
+<li>nats-sub</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cd $GOPATH/src/github.com/nats-io/examples/nats-sub
+$ go build -o ~/nats-sub main.go
+</code></pre></div><p>subjectをそれぞれ<code>channel.1</code>、<code>channel.2</code>、<code>channel.*</code>で起動しておく</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ./nats-sub <span style="color:#e6db74">&#34;channel.1&#34;</span>
+$ ./nats-sub <span style="color:#e6db74">&#34;channel.2&#34;</span>
+$ ./nats-sub <span style="color:#e6db74">&#34;channel.*&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ./nats-pub -h
+Usage: nats-pub <span style="color:#f92672">[</span>-s server<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-creds file<span style="color:#f92672">]</span> &lt;subject&gt; &lt;msg&gt;
+  -creds string
+    	User Credentials File
+  -h	Show help message
+  -reply string
+    	Sets a specific reply subject
+  -s string
+    	The nats server URLs <span style="color:#f92672">(</span>separated by comma<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>default <span style="color:#e6db74">&#34;nats://127.0.0.1:4222&#34;</span><span style="color:#f92672">)</span>
+
+
+$ ./nats-pub <span style="color:#e6db74">&#34;channel.1&#34;</span> <span style="color:#e6db74">&#34;hello, world&#34;</span>
+Published <span style="color:#f92672">[</span>channel.1<span style="color:#f92672">]</span> : <span style="color:#e6db74">&#39;hello, world&#39;</span>
+</code></pre></div><p><code>channel.1</code>、<code>channel.*</code>でメッセージを受信することがわかる</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#f92672">[</span><span style="color:#75715e">#1] Received on [channel.1]: &#39;hello, world&#39;</span>
+</code></pre></div><h4 id="request-reply">Request Reply</h4>
+<p>以下のファイルを準備してビルドしておく。</p>
+<ul>
+<li>nats-req (request client)</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cd $GOPATH/src/github.com/nats-io/examples/nats-req
+$ go build -o ~/nats-req main.go
+</code></pre></div><ul>
+<li>nats-rply</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cd $GOPATH/src/github.com/nats-io/examples/nats-rply
+$ go build -o ~/nats-rply main.go
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ./nats-sub channel.1
+
+<span style="color:#75715e"># channel.1に対してreplyする</span>
+$ ./nats-rply channel.1 <span style="color:#e6db74">&#34;reply to channel.1&#34;</span>
+</code></pre></div><p>準備ができたらRequestを送ってみると、リクエストに対して結果メッセージを受け取っていることがわかる</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ ./nats-req channel.1 <span style="color:#e6db74">&#34;hi, nats - request reply&#34;</span>
+Published <span style="color:#f92672">[</span>channel.1<span style="color:#f92672">]</span> : <span style="color:#e6db74">&#39;hi, nats - request reply&#39;</span>
+Received  <span style="color:#f92672">[</span>_INBOX.dDN25cv418R1ZxVYTea9Pq.XhPjbFG3<span style="color:#f92672">]</span> : <span style="color:#e6db74">&#39;reply to channel.1&#39;</span>
+</code></pre></div><p><code>nats-sub</code>、<code>nats-rply</code>クライアントはPub/Sub時と同様にメッセージを受け取っていることがわかる。</p>
+<pre><code>[#1] Received on [channel.1]: 'hi, nats - request reply'
+</code></pre><h4 id="queue-groups">Queue Groups</h4>
+<p>以下のファイルを準備してビルドしておく。</p>
+<ul>
+<li>[nats-qsub]</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ cd $GOPATH/src/github.com/nats-io/examples/nats-qsub
+$ go build -o ~/nats-qsub main.go
+</code></pre></div><p>各GROUP別にa,bのqueue groups subを起動する</p>
+<pre><code>$ ./nats-qsub &quot;channel.1&quot; G1  # group1 a
+$ ./nats-qsub &quot;channel.1&quot; G1  # group1 b
+$ ./nats-qsub &quot;channel.1&quot; G2  # group2 a
+$ ./nats-qsub &quot;channel.1&quot; G2  # group2 b
+</code></pre><p>Pubクライアントからメッセージを送ってみる</p>
+<pre><code>$ ./nats-pub &quot;channel.1&quot; &quot;msg 1&quot;
+$ ./nats-pub &quot;channel.1&quot; &quot;msg 2&quot;
+$ ./nats-pub &quot;channel.1&quot; &quot;msg 3&quot;
+$ ./nats-pub &quot;channel.1&quot; &quot;msg 4&quot;
+$ ./nats-pub &quot;channel.1&quot; &quot;msg 5&quot;
+$ ./nats-pub &quot;channel.1&quot; &quot;msg 6&quot;
+$ ./nats-pub &quot;channel.1&quot; &quot;msg 7&quot;
+</code></pre><p>メッセージ送った際のそれぞれのQueue-Subクライアントの出力は以下</p>
+<p>group1 a</p>
+<pre><code>[#1] Received on [channel.1] Queue[G1] Pid[33681]: 'msg 2'
+[#2] Received on [channel.1] Queue[G1] Pid[33681]: 'msg 4'
+[#3] Received on [channel.1] Queue[G1] Pid[33681]: 'msg 5'
+</code></pre><p>group1 b</p>
+<pre><code>[#1] Received on [channel.1] Queue[G1] Pid[33855]: 'msg 1'
+[#2] Received on [channel.1] Queue[G1] Pid[33855]: 'msg 3'
+[#3] Received on [channel.1] Queue[G1] Pid[33855]: 'msg 6'
+[#4] Received on [channel.1] Queue[G1] Pid[33855]: 'msg 7'
+</code></pre><p>group2 a</p>
+<pre><code>[#1] Received on [channel.1] Queue[G2] Pid[33869]: 'msg 2'
+</code></pre><p>group2 b</p>
+<pre><code>[#1] Received on [channel.1] Queue[G2] Pid[33878]: 'msg 1'
+[#2] Received on [channel.1] Queue[G2] Pid[33878]: 'msg 3'
+[#3] Received on [channel.1] Queue[G2] Pid[33878]: 'msg 4'
+[#4] Received on [channel.1] Queue[G2] Pid[33878]: 'msg 5'
+[#5] Received on [channel.1] Queue[G2] Pid[33878]: 'msg 6'
+[#6] Received on [channel.1] Queue[G2] Pid[33878]: 'msg 7'
+</code></pre><p>同じキューグループ内ではどれか1つのサブスクライバーにメッセージを投げていることがわかる
+メッセージンングの基本はここまで。</p>
+<h2 id="周辺機能">周辺機能</h2>
+<p>Pub/Subメッセージング機能以外、いろいろ機能も提供するので<code>Login</code>、<code>Cluster</code>、<code>Security</code>、<code>TLS</code>、<code>Auto Pruning of Client</code>、<code>Monitoring(nats-top)</code>公式サイトの<a href="https://docs.nats.io/nats-tools/nats-tools">こちら</a>を参考。</p>
+<h1 id="nats-streamingも動かしてみる">NATS Streamingも動かしてみる</h1>
+<p>インストール
+サーバー</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ go get github.com/nats-io/nats-streaming-server
+</code></pre></div><p>クライアント</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ go get github.com/nats-io/go-nats-streaming
+</code></pre></div><p>nats-streaming-server起動</p>
+<blockquote>
+<p>NATS Streamingはデフォルトでメモリーに保存するので、storeを指定する必要がある</p>
+</blockquote>
+<pre><code>$ nats-streaming-server \
+--store file \
+--dir ~/nats-data \
+--max_msgs 0 \
+--max_bytes 0 \
+-m 8222
+[36605] 2020/05/21 00:00:28.299327 [INF] STREAM: Starting nats-streaming-server[test-cluster] version 0.17.0
+[36605] 2020/05/21 00:00:28.299414 [INF] STREAM: ServerID: Y7biTD492HYNnhEuppbTls
+[36605] 2020/05/21 00:00:28.299416 [INF] STREAM: Go version: go1.14.2
+[36605] 2020/05/21 00:00:28.299419 [INF] STREAM: Git commit: [not set]
+[36605] 2020/05/21 00:00:28.300419 [INF] Starting nats-server version 2.1.4
+[36605] 2020/05/21 00:00:28.300433 [INF] Git commit [not set]
+[36605] 2020/05/21 00:00:28.300717 [INF] Starting http monitor on 0.0.0.0:8222
+[36605] 2020/05/21 00:00:28.300791 [INF] Listening for client connections on 0.0.0.0:4222
+[36605] 2020/05/21 00:00:28.300800 [INF] Server id is NATREZUT75YOVKYKX5ZE74O7VXO3S6RFHO2ZXSOMMLYEPPYOYI3Q2CZT
+[36605] 2020/05/21 00:00:28.300804 [INF] Server is ready
+[36605] 2020/05/21 00:00:28.332589 [INF] STREAM: Recovering the state...
+[36605] 2020/05/21 00:00:28.332883 [INF] STREAM: No recovered state
+[36605] 2020/05/21 00:00:28.589042 [INF] STREAM: Message store is FILE
+[36605] 2020/05/21 00:00:28.589079 [INF] STREAM: Store location: /Users/Target/nats-data
+[36605] 2020/05/21 00:00:28.589152 [INF] STREAM: ---------- Store Limits ----------
+[36605] 2020/05/21 00:00:28.589159 [INF] STREAM: Channels:                  100 *
+[36605] 2020/05/21 00:00:28.589165 [INF] STREAM: --------- Channels Limits --------
+[36605] 2020/05/21 00:00:28.589172 [INF] STREAM:   Subscriptions:          1000 *
+[36605] 2020/05/21 00:00:28.589178 [INF] STREAM:   Messages     :     unlimited
+[36605] 2020/05/21 00:00:28.589183 [INF] STREAM:   Bytes        :     unlimited
+[36605] 2020/05/21 00:00:28.589189 [INF] STREAM:   Age          :     unlimited *
+[36605] 2020/05/21 00:00:28.589194 [INF] STREAM:   Inactivity   :     unlimited *
+[36605] 2020/05/21 00:00:28.589200 [INF] STREAM: ----------------------------------
+[36605] 2020/05/21 00:00:28.589207 [INF] STREAM: Streaming Server is ready
+</code></pre><h3 id="streaming-pubsub">Streaming Pub/Sub</h3>
+<h3 id="message-store">Message Store</h3>
+<h1 id="最後に">最後に</h1>
+<p>NATSについてひととおりの機能を試しながら紹介しました。
+もう少しNATS Streamingの詳細やクラスタリングの動作を掘り下げていったり、
+Goクライアントの紹介や実際にNATSを使用したサンプルアプリケーションの実装なんかも今後試してみたいところです</p>
+
+                </section>
+            </article>
+
+            
+                <a class="twitter" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fgnixxyz.github.io%2fposts%2f2020-05-20-nats%2f - NATS%20Messaging by @your_twitter_id"><span class="icon-twitter"> tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+            
+
+            
+
+            
+                <ul id="post-list" class="archive readmore">
+    <h3>Read more</h3>
+
+    
+    
+    
+        <li>
+            <a href="/posts/2020-05-19-welcome/">Welcome<aside class="dates">May 19 2020</aside></a>
+        </li>
+    
+</ul>
+
+            
+
+            <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    <a class="symbol" href="https://www.github.com/gnixxyz">
+        <i class="fa fa-github-square"></i>
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+       © Copyright 2020 <i class="fa fa-heart" aria-hidden="true"></i> gnixxyz
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="https://gnixxyz.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://gnixxyz.github.io/js/main.js"></script>
+<script src="https://gnixxyz.github.io/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+
+    </body>
+</html>
