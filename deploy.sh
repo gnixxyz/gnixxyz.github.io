@@ -16,6 +16,7 @@ git push
 # Build the project.
 hugo # if using a theme, replace with `hugo -t <YOURTHEME>`
 
+pushd ./
 # Go To Public folder
 cd public
 # Add changes to git.
@@ -28,4 +29,4 @@ git commit -m "$msg"
 git push origin master
 
 # Come Back up to the Project Root
-cd ..
+popd

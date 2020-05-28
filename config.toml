@@ -5,9 +5,11 @@ title = "gnixxyz"
 theme = "hugo-theme-cactus-plus"
 archetypeDir = "archetypes"
 publishDir = "public"
-googleAnalytics = "your_google_analytics_id"
+
 # Set the value to true if your site include CJK (Chinese, Japanese, and Korean languages) characters
-hasCJKLanguage = false
+hasCJKLanguage = true
+buildDrafts = false
+googleAnalytics = "your_google_analytics_id"
 
 [params]
 	author = "gnixxyz"
@@ -23,18 +25,16 @@ hasCJKLanguage = false
 	enableDisqus = false
 	disqusShortname = "your_disqus_short_name"
 
-
-	enableSummary = true
+	enableSummary = false
 	# Set the value to true if use description in post front matter replace content summary
 	useDescriptionReplaceSummary = false
 
-
-	enableGoogleAnalytics = true
+	enableGoogleAnalytics = false
 	enableBaiduAnalytics = false
 	# Set the value to your baidu analysis code if you want to use baidu analytics
 	baiduAnalytics = 'your_baidu_analysis_code'
 
-	enableTwitterCard = true
+	enableTwitterCard = false
 	# The url for twitter card image, default is avatar.png in static/images directory
 	twitterCardImage = ""
 
@@ -56,7 +56,7 @@ hasCJKLanguage = false
 	copyright = ""
 
 	# show latest posts in single page
-	showLatestPosts = false
+	showLatestPosts = true
 	readMore = ""
 
 	# Share
@@ -73,6 +73,15 @@ hasCJKLanguage = false
     # The social icons can be styled differently if you use mono as font - circle, rounded, or empty
     socialIconStyle = ""
 
+	# Ad
+	enableAd = true
+	googleAdsense = "ca-pub-3961397724306420"
+	
+[markup]
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 4
+    ordered = false
 
 # Add additional social link entries underneath
 [social]
